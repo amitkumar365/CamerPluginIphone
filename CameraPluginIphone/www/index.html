@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title></title>
+  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+	<meta charset="utf-8">
+
+
+	<script type="text/javascript" charset="utf-8" src="cordova-1.7.0.js"></script>
+  	<script type="text/javascript" charset="utf-8" src="CameraPlugin.js"></script>
+
+    <script type="text/javascript">
+
+	
+function onBodyLoad()
+	{		
+		document.addEventListener("deviceready", onDeviceReady, false);
+	}
+	function onDeviceReady()
+	{
+		// do your thing!
+		//navigator.notification.alert("Ready to Test");
+    
+   
+	}
+  function capturePhoto() {
+/*  alert(device.uuid);
+  console.log(device.uuid);*/
+  
+ window.plugins.CameraPlugin.takepic(onCameraSuccess,onCameraFailure,{ quality : 15,
+    destinationType : navigator.camera.DestinationType.DATA_URL,
+    encodingType : navigator.camera.EncodingType.JPEG,
+    correctOrientation:false,
+    allowEdit : false });
+  
+    }
+
+   function onCameraSuccess(recData)
+{
+try{
+//alert(recData);
+console.log(recData);
+JSON.stringify("recdata "+recData);
+//console.log(recdata.data);
+}catch(e){//alert(e);
+}
+//navigator.notification.alert("from onCameraSuccess");
+  //console.log("onCameraSuccess");
+  // navigator.notification.alert("Image obtained");
+   try{
+   document.getElementById('imageTest').src = recData.data;
+   }catch(e)
+   {
+   
+   }
+   
+   
+}
+function onCameraFailure(){
+//navigator.notification.alert("Camera cancelled/failed");
+}
+
+    
+    </script>
+  </head>
+  <body onload="onBodyLoad()">
+<button onclick="capturePhoto();" style="height:30px; -webkit-appearance:none;">Capture Photo</button> <br>
+<br>
+<img id="imageTest" style="width:150px"/>
+
+  </body>
+</html>
